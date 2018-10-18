@@ -5,9 +5,9 @@ import java.io.*;
 public class BlockChain{
 	//Repeat Set block nonce to <next random string of visible characters>
 	 //Until ( SHA-1(block.toString()) starts with ‘00000’ in hexa )
-	
+	ArrayList blocks;
 	public BlockChain(ArrayList text){
-		
+		blocks = text;
 	}
 	
 	public static void main(String[] args) {
@@ -24,7 +24,8 @@ public class BlockChain{
 	
 	public static BlockChain fromFile(String fileName) {
 		//add into array list
-		File file = new File(fileName);
+		File file = new File("\\"+fileName+".txt");
+		BufferedReader br = new BufferedReader(new FileReader(file));
 		
 		
 		return null;
