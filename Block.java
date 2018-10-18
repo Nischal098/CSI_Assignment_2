@@ -1,3 +1,5 @@
+import java.sql.Timestamp;
+
 public class Block {
  private int index; // the index of the block in the list
  private java.sql.Timestamp timestamp; // time at which transaction
@@ -10,6 +12,8 @@ public class Block {
 //from previous variables via toString() method)
 //...
  public String toString() {
+	 timestamp = new Timestamp(System.currentTimeMillis());
+	 
  return timestamp.toString() + ":" + transaction.toString()
  + "." + nonce+ previousHash;
 }
