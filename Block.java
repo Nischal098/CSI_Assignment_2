@@ -42,17 +42,28 @@ public class Block {
 	 }
 	
 	
+	@SuppressWarnings("static-access")
 	private void computeHash() {
 		Random rand = new Random();
-		String experimentalNounce = null;
+		String experimentalHash = null;
 		Sha1 encryptor = new Sha1();		
 		
-		
-		for(int i = 0; i <= rand.nextInt(15)+4; i++) {
-			char c = (char) (rand.nextInt(126) + 33);
-			experimentalNounce += c;
-		}		
-		
+		while(true) {
+			nonce = "";
+			for(int i = 0; i <= rand.nextInt(3)+10; i++) {
+				char c = (char) (rand.nextInt(126) + 33);
+				nonce += c;
+			}	
+			try {
+				experimentalHash = encryptor.hash(toString());
+				if (experimentalHash.substring(0,5).equals("00000")) {
+					hash = experimentalHash;
+					break;
+				}
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("Unsupported Encoding Block");
+			}	
+		}			
 	 }
 	 
 	public int getIndex() {

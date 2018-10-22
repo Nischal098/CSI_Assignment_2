@@ -36,7 +36,7 @@ public class BlockChain{
 				receiverInput = scan.next();
 				
 				System.out.println("Enter the amount for Transaction: ");
-				amountInput = scan.next();
+				amountInput = scan.next();				
 				
 				if (blockListCollection.getBalance(senderInput)<Integer.parseInt(amountInput)) {
 					System.out.println("Sender Balance is less than amount specified. Please try again");
@@ -71,11 +71,11 @@ public class BlockChain{
 			}		
 			
 			//Write into File
-			scan = new Scanner(System.in);
-			System.out.println("Enter the File Name to write into: ");
-			outputFile = scan.next();
+			System.out.println("Writing Into File");
+			outputFile = inputFile + "_nshar082";
 			
-			blockListCollection.toFile(outputFile + ".txt");	
+			blockListCollection.toFile(outputFile + ".txt");
+			System.out.println("Succesful!");
 		}	
 	}
 	
@@ -182,9 +182,9 @@ public class BlockChain{
 			return 0;
 		else {
 			for(int i = 0; i < getList().size(); i++) {
-				if (username == getList().get(i).getTransaction().getSender().toString())
+				if (getList().get(i).getTransaction().getSender().equals(username))
 					returnBalance -= getList().get(i).getTransaction().getAmount();
-				if (username == getList().get(i).getTransaction().getReceiver().toString())
+				if (getList().get(i).getTransaction().getReceiver().equals(username))
 					returnBalance += getList().get(i).getTransaction().getAmount();			
 			}
 			return returnBalance;
