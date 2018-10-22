@@ -138,14 +138,23 @@ public class BlockChain{
 		return blockList;
 	}
 	
+	@SuppressWarnings("static-access")
 	public boolean validateBlockchain() {
-		for(int i = 0; i < getList().size()-1; i++) {
-			if(getList().get(i).getHash().toString() != getList().get(i+1).getPreviousHash().toString())
-				return false;
-			if(getList().get(i).getIndex() != i && getList().get(i+1).getIndex() != i+1) 
-				return false;
-		}	
+		Sha1 checkHash = new Sha1();
 		
+		for(int i = 0; i < getList().size(); i++) {			
+			if(getList().get(i).getIndex() != i) 
+				return false;
+		}
+		
+		for(int i = 0; i < getList().size()-1; i++) {		
+			try {
+				if (!checkHash.hash(getList().get(i).toString()).equals(getList().get(i+1).getPreviousHash())) 
+					return false;
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("Cannot Encode Block");
+			}		
+		}		
 		
 		ArrayList<String> listOfPeople = new ArrayList<String>();
 		for(int i = 0; i < getList().size(); i++) {

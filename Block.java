@@ -1,5 +1,6 @@
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.Random;
 
 //Repeat Set block nonce to <next random string of visible characters>
 //Until ( SHA-1(block.toString()) starts with ‘00000’ in hexa )
@@ -24,8 +25,7 @@ public class Block {
 		 
 		 timestamp = new Timestamp(System.currentTimeMillis());
 		 
-		 this.nonce = nonce;
-		 this.hash = computeHash();
+		 computeHash();
 	 }
 	
 	//Block you get from reading
@@ -42,15 +42,17 @@ public class Block {
 	 }
 	
 	
-	private String computeHash() {
-		String encrypted = null;
+	private void computeHash() {
+		Random rand = new Random();
+		String experimentalNounce = null;
+		Sha1 encryptor = new Sha1();		
 		
-		try {
-			encrypted = Sha1.hash(previousHash);
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("Cannot Hash for block: " + index);
-		}
-		return encrypted;
+		
+		for(int i = 0; i <= rand.nextInt(15)+4; i++) {
+			char c = (char) (rand.nextInt(126) + 33);
+			experimentalNounce += c;
+		}		
+		
 	 }
 	 
 	public int getIndex() {
