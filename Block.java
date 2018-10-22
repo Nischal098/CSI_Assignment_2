@@ -46,11 +46,13 @@ public class Block {
 	private void computeHash() {
 		Random rand = new Random();
 		String experimentalHash = null;
-		Sha1 encryptor = new Sha1();		
+		Sha1 encryptor = new Sha1();	
+		long trialsCounter = 0l;
 		
 		while(true) {
+			trialsCounter++;
 			nonce = "";
-			for(int i = 0; i <= rand.nextInt(3)+10; i++) {
+			for(int i = 0; i <= rand.nextInt(5)+10; i++) {
 				char c = (char) (rand.nextInt(126) + 33);
 				nonce += c;
 			}	
@@ -58,11 +60,12 @@ public class Block {
 				experimentalHash = encryptor.hash(toString());
 				if (experimentalHash.substring(0,5).equals("00000")) {
 					hash = experimentalHash;
+					System.out.println("Number of Trials: " + trialsCounter);
 					break;
 				}
 			} catch (UnsupportedEncodingException e) {
 				System.out.println("Unsupported Encoding Block");
-			}	
+			}			
 		}			
 	 }
 	 
